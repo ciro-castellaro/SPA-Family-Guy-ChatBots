@@ -1,195 +1,197 @@
 # Family Guy Chat
 
-SPA (Single Page Application) que permite conversar con personajes de Family Guy (Peter, Stewie, Brian y Lois Griffin) impulsados por **Google Gemini AI**, construida con HTML, CSS y JavaScript Vanilla (ES Modules), con una Serverless Function en Vercel que protege la API Key.
+SPA (Single Page Application) that allows users to chat with Family Guy characters (Peter, Stewie, Brian, and Lois Griffin) powered by **Google Gemini AI**, built with HTML, CSS, and Vanilla JavaScript (ES Modules), with a Vercel Serverless Function that protects the API Key.
 
-Proyecto académico sin fines comerciales. Family Guy y sus personajes son propiedad de Fox/20th Television — esta app es una adaptación con fines educativos para reforzar los conocimientos de Frontend, serverless functions, IA, etc.
+> Academic project for non-commercial purposes. Family Guy and its characters are owned by Fox/20th Television — this app is an adaptation created for educational purposes to strengthen frontend, serverless functions, AI, and related skills.
 
-## Enlaces
+## Links
 
-- **Repositorio en GitHub:** https://github.com/ciro-castellaro/ProyectoM3_Ciro-Castellaro
-
-- **App deployada:** https://chat-fg.vercel.app
-
-- **Uso de IA:** https://drive.google.com/drive/folders/1_wFPQQfGfvCgE96-Eka9Gfo6I_8VIF3C?usp=sharing
+* **GitHub Repository:** https://github.com/ciro-castellaro/ProyectoM3_Ciro-Castellaro
+* **Deployed App:** https://chat-fg.vercel.app
+* **AI Usage:** https://drive.google.com/drive/folders/1_wFPQQfGfvCgE96-Eka9Gfo6I_8VIF3C?usp=sharing
 
 ---
 
-## Descripción general
+## Overview
 
-La aplicación permite elegir uno de cuatro personajes de Family Guy y chatear con él en tiempo real. Cada personaje tiene su propia personalidad, forma de hablar y límites de conocimiento, definidos mediante un System Prompt específico que se envía a Gemini en cada conversación.
+The application allows users to choose one of four Family Guy characters and chat with them in real time. Each character has their own personality, speaking style, and knowledge boundaries, defined through a specific System Prompt that is sent to Gemini for each conversation.
 
-Es una SPA real: la navegación entre Home, Chat y About se maneja con la History API del navegador (`pushState`/`popstate`), sin recargar la página en ningún momento.
+It is a real SPA: navigation between Home, Chat, and About is handled using the browser's History API (`pushState`/`popstate`), without reloading the page.
 
-## Características principales
+## Main Features
 
-- Selección entre 4 personajes de Family Guy, cada uno con personalidad y System Prompt propios.
-- Chat en tiempo real contra Google Gemini, con historial de conversación persistente durante la sesión (por personaje).
-- Navegación SPA con History API (sin recargas de página).
-- Diseño responsive, Mobile First (Flexbox + Grid).
-- Estados visuales: indicador de "escribiendo...", botones deshabilitados mientras se espera respuesta, manejo de errores.
-- API Key de Gemini protegida en todo momento: nunca se expone en el frontend, solo la conoce la Serverless Function.
-- Suite de tests unitarios con Vitest sobre la lógica pura del proyecto.
+* Selection between 4 Family Guy characters, each with their own personality and System Prompt.
+* Real-time chat with Google Gemini, with conversation history persisted throughout the session (per character).
+* SPA navigation using the History API (without page reloads).
+* Responsive, Mobile First design (Flexbox + Grid).
+* Visual states: "typing..." indicator, disabled buttons while waiting for a response, and error handling.
+* Gemini API Key is protected at all times: it is never exposed on the frontend and is only accessible by the Serverless Function.
+* Unit test suite with Vitest covering the project's pure logic.
 
-## Tecnologías utilizadas
+## Technologies Used
 
-- HTML5
-- CSS3 (Flexbox, Grid, Mobile First, Media Queries)
-- JavaScript Vanilla (ES Modules)
-- Fetch API
-- History API
-- [Google Gemini API](https://ai.google.dev/) mediante el SDK oficial [`@google/genai`](https://www.npmjs.com/package/@google/genai)
-- Vercel Serverless Functions
-- [Vitest](https://vitest.dev/) para testing
-- Git / GitHub
-- Vercel (hosting y deploy)
+* HTML5
+* CSS3 (Flexbox, Grid, Mobile First, Media Queries)
+* Vanilla JavaScript (ES Modules)
+* Fetch API
+* History API
+* [Google Gemini API](https://ai.google.dev/) through the official [`@google/genai`](https://www.npmjs.com/package/@google/genai) SDK
+* Vercel Serverless Functions
+* [Vitest](https://vitest.dev/) for testing
+* Git / GitHub
+* Vercel (hosting and deployment)
 
-## Estructura del proyecto
+## Project Structure
 
-```
+```text
 project-root/
 ├── api/
-│   └── functions.js          # Serverless Function: proxy hacia Gemini, protege la API Key
+│   └── functions.js          # Serverless Function: proxy to Gemini, protects the API Key
 ├── src/
-│   ├── index.html             # Estructura de las 3 vistas (Home, Chat, About)
-│   ├── styles.css             # Estilos Mobile First (Flexbox + Grid)
-│   ├── app.js                 # Punto de entrada: routing SPA (History API)
-│   ├── chat.js                # Estado del chat, integración con la Serverless Function
-│   ├── characters.js          # Datos de los personajes: nombre, tagline, avatar y System Prompt
-│   └── utils.js               # Funciones puras reutilizables (parseo, validación, fetch, routing)
+│   ├── index.html             # Structure of the 3 views (Home, Chat, About)
+│   ├── styles.css             # Mobile First styles (Flexbox + Grid)
+│   ├── app.js                 # Entry point: SPA routing (History API)
+│   ├── chat.js                # Chat state and Serverless Function integration
+│   ├── characters.js          # Character data: name, tagline, avatar, and System Prompt
+│   └── utils.js               # Reusable pure functions (parsing, validation, fetch, routing)
 ├── tests/
-│   ├── utils.test.js          # Tests de las funciones puras de utils.js
-│   └── app.test.js            # Tests de characters.js y de las funciones puras de api/functions.js
-├── capturas de pantalla M3/   # Screenshots de la app usadas en este README
-├── .env                        # Variables de entorno reales (NUNCA se sube — está en .gitignore)
-├── .env.example                # Plantilla de las variables de entorno necesarias
+│   ├── utils.test.js          # Tests for the pure functions in utils.js
+│   └── app.test.js            # Tests for characters.js and the pure functions in api/functions.js
+├── capturas de pantalla M3/   # App screenshots used in this README
+├── .env                        # Actual environment variables (NEVER committed — included in .gitignore)
+├── .env.example                # Environment variable template
 ├── .gitignore
-├── vercel.json                 # Configuración de Vercel: outputDirectory + rewrite para el routing SPA
+├── vercel.json                 # Vercel configuration: outputDirectory + rewrite for SPA routing
 ├── package.json
 └── README.md
 ```
 
-## Requisitos previos
+## Prerequisites
 
-- [Node.js](https://nodejs.org/) 18 o superior
-- npm (incluido con Node.js)
-- Una cuenta de [Google AI Studio](https://aistudio.google.com/) para generar una API Key de Gemini
-- Git
-- Cuenta de [Vercel](https://vercel.com/) (para levantar el entorno de desarrollo local con Serverless Functions y para el deploy)
+* [Node.js](https://nodejs.org/) 18 or higher
+* npm (included with Node.js)
+* A [Google AI Studio](https://aistudio.google.com/) account to generate a Gemini API Key
+* Git
+* A [Vercel](https://vercel.com/) account (required to run Serverless Functions locally and for deployment)
 
-## Instalación
+## Installation
 
 ```bash
-# Clonar el repositorio
+# Clone the repository
 git clone https://github.com/ciro-castellaro/ProyectoM3_Ciro-Castellaro.git
 
-# Entrar a la carpeta del proyecto
+# Enter the project folder
 cd ProyectoM3_Ciro-Castellaro
 
-# Instalar dependencias
+# Install dependencies
 npm install
 ```
 
-## Configuración del archivo `.env`
+## `.env` Configuration
 
-El proyecto necesita una API Key de Google Gemini para funcionar. Nunca se sube al repositorio (está en `.gitignore`) — cada persona que corre el proyecto debe crear su propio `.env` local.
+The project requires a Google Gemini API Key to work. It is never committed to the repository (it is included in `.gitignore`) — anyone running the project must create their own local `.env` file.
 
-1. Copiá `.env.example` a un nuevo archivo `.env` en la raíz del proyecto:
+1. Copy `.env.example` to a new `.env` file in the project root:
 
-   ```bash
-   cp .env.example .env
-   ```
+```bash
+cp .env.example .env
+```
 
-2. Completá el valor real de tu API Key (generada en [Google AI Studio](https://aistudio.google.com/)):
+2. Add your actual API Key (generated through [Google AI Studio](https://aistudio.google.com/)):
 
-   ```env
-   GEMINI_API_KEY=tu_api_key_de_google_gemini_aqui
-   ```
+```env
+GEMINI_API_KEY=your_google_gemini_api_key_here
+```
 
-## Cómo ejecutar el proyecto localmente
+## Running the Project Locally
 
-⚠️ **Importante:** este proyecto usa una Serverless Function (`api/functions.js`), así que **no se puede probar con Live Server** ni con ningún servidor de archivos estáticos — esas herramientas no ejecutan funciones serverless y las llamadas a `/api/functions` van a fallar. Hay que levantarlo con la CLI de Vercel:
+⚠️ **Important:** this project uses a Serverless Function (`api/functions.js`), so it **cannot be tested with Live Server** or any static file server — these tools do not execute serverless functions, and requests to `/api/functions` will fail. The project must be run using the Vercel CLI:
 
 ```bash
 npx vercel dev --local --listen 3000
 ```
 
-- `--local` evita tener que loguearse o vincular el proyecto a una cuenta de Vercel para desarrollo local.
-- La app queda disponible en `http://localhost:3000`.
+* `--local` prevents the need to log in or link the project to a Vercel account for local development.
+* The app will be available at `http://localhost:3000`.
 
-Si ya vinculaste el proyecto a tu cuenta de Vercel (`vercel link`), también podés correr simplemente `vercel dev`.
+If you have already linked the project to your Vercel account (`vercel link`), you can also simply run:
 
-## Cómo ejecutar los tests
+```bash
+vercel dev
+```
 
-El proyecto usa [Vitest](https://vitest.dev/):
+## Running the Tests
+
+The project uses [Vitest](https://vitest.dev/):
 
 ```bash
 npm test
 ```
 
-Esto corre `vitest run` sobre `tests/utils.test.js` y `tests/app.test.js`, cubriendo las funciones puras del proyecto: parseo de texto del encabezado del chat, validación y saneo de mensajes, resolución de rutas, obtención de personajes por id, y el armado del payload que se le envía a Gemini (mapeo de roles y construcción del historial de conversación).
+This runs `vitest run` against `tests/utils.test.js` and `tests/app.test.js`, covering the project's pure functions: chat header text parsing, message validation and sanitization, route resolution, retrieving characters by ID, and building the payload sent to Gemini (role mapping and conversation history construction).
 
-## Deploy en Vercel
+## Vercel Deployment
 
-1. Subí el repositorio a GitHub (ya hecho en este proyecto).
-2. Importá el repositorio en [Vercel](https://vercel.com/new).
-3. **Dejá "Root Directory" apuntando a la raíz del repositorio** (no a `src`) — la carpeta `api/` tiene que quedar visible para que Vercel detecte la Serverless Function. La configuración de dónde están los archivos estáticos (`src/`) y el rewrite para el routing SPA ya están resueltos en `vercel.json`, no hace falta tocar nada más ahí.
-4. En **Settings → Environment Variables**, agregá `GEMINI_API_KEY` con tu API Key real (marcá al menos el entorno de Production).
-5. Deployá. Si agregaste la variable de entorno después de un deploy ya existente, hace falta un **redeploy** para que tome el nuevo valor.
+1. Push the repository to GitHub (already done for this project).
+2. Import the repository into [Vercel](https://vercel.com/).
+3. **Keep "Root Directory" pointing to the repository root** (not `src`) — the `api/` folder must remain visible so Vercel can detect the Serverless Function. The configuration for the static files (`src/`) and the SPA routing rewrite is already defined in `vercel.json`, so no additional configuration is required.
+4. Under **Settings → Environment Variables**, add `GEMINI_API_KEY` with your actual API Key (enable at least the Production environment).
+5. Deploy. If you added the environment variable after an existing deployment, a **redeploy** is required for the new value to take effect.
 
-La app deployada de este proyecto está en: **https://chat-fg.vercel.app**
+The deployed app for this project is available at: **https://chat-fg.vercel.app**
 
-## Serverless Function: por qué protege la API Key
+## Serverless Function: Why It Protects the API Key
 
-El navegador es un entorno público: cualquier persona puede abrir las DevTools e inspeccionar el código JavaScript que se le envía, incluidas las variables. Si el frontend llamara directamente a la API de Gemini, la API Key tendría que viajar en ese código y cualquier visitante podría copiarla y usarla a costa de la cuenta del dueño del proyecto.
+The browser is a public environment: anyone can open DevTools and inspect the JavaScript code sent to the browser, including variables. If the frontend called the Gemini API directly, the API Key would have to be included in that code, allowing any visitor to copy it and use it at the project's owner's expense.
 
-Por eso existe `api/functions.js`: una Serverless Function que corre del lado del servidor de Vercel, no en el navegador del usuario. El flujo es:
+That's why `api/functions.js` exists: it is a Serverless Function that runs on Vercel's server rather than in the user's browser. The flow is:
 
+```text
+Browser (fetch) → /api/functions (Serverless Function, with the key) → Gemini API
+Browser (receives response) ← /api/functions (forwards response) ← Gemini API
 ```
-Navegador (fetch) → /api/functions (Serverless Function, con la key) → Gemini API
-Navegador (recibe respuesta) ← /api/functions (reenvía la respuesta) ← Gemini API
-```
 
-El frontend nunca conoce la API Key: solo le manda a `/api/functions` el System Prompt del personaje elegido, el historial de la conversación y el último mensaje. Es la función la que lee `GEMINI_API_KEY` desde una variable de entorno del servidor (nunca desde el código) y arma el request real a Gemini usando el SDK oficial [`@google/genai`](https://www.npmjs.com/package/@google/genai). La función también maneja los errores de método inválido, falta de configuración, body incompleto y errores devueltos por Gemini, devolviendo siempre una respuesta JSON consistente al frontend.
+The frontend never knows the API Key: it only sends the selected character's System Prompt, conversation history, and latest message to `/api/functions`. The function reads `GEMINI_API_KEY` from a server-side environment variable (never from the code) and builds the actual Gemini request using the official [`@google/genai`](https://www.npmjs.com/package/@google/genai) SDK. The function also handles invalid methods, missing configuration, incomplete request bodies, and errors returned by Gemini, always returning a consistent JSON response to the frontend.
 
-## Los personajes y el System Prompt
+## Characters and System Prompts
 
-La app permite elegir entre **4 personajes de Family Guy**, cada uno definido en `src/characters.js` con: `id`, `name`, `tagline` (frase corta para la tarjeta de selección), `avatar` (un emoji, para no depender de imágenes con derechos de autor del show original) y `systemPrompt` (el texto completo de instrucciones para Gemini).
+The app allows users to choose between **4 Family Guy characters**, each defined in `src/characters.js` with: `id`, `name`, `tagline` (a short phrase displayed on the selection card), `avatar` (an emoji, avoiding reliance on copyrighted images from the original show), and `systemPrompt` (the complete set of instructions sent to Gemini).
 
-Cada System Prompt sigue la misma estructura:
+Each System Prompt follows the same structure:
 
-- **Personalidad:** rasgos de carácter centrales del personaje.
-- **Cómo habla:** tono, muletillas y forma de expresarse.
-- **Qué sabe:** el conocimiento y contexto narrativo del que sí puede hablar.
-- **Qué no sabe:** límites explícitos (tecnología real, política/noticias actuales), y la instrucción de no romper el personaje ni revelar que es un modelo de IA.
-- **Límites obligatorios:** guardrails de contenido — nunca violento, sexual, discriminatorio o de odio, sin consejos médicos/legales/financieros reales, humor absurdo pero nunca cruel.
+* **Personality:** the character's core personality traits.
+* **How they speak:** tone, catchphrases, and speaking style.
+* **What they know:** the knowledge and narrative context they can discuss.
+* **What they don't know:** explicit boundaries (real-world technology, current politics/news), along with instructions not to break character or reveal that they are an AI model.
+* **Mandatory limits:** content guardrails — never violent, sexual, discriminatory, or hateful; no real medical/legal/financial advice; absurd humor, but never cruel.
 
-Los cuatro personajes disponibles:
+The four available characters are:
 
-| Personaje             | Descripción                                                                                                                                 |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| 🍺 **Peter Griffin**  | Padre de familia impulsivo y distraído, amante de la cerveza Pawtucket y la TV, leal a su familia y amigos, con humor absurdo y tangencial. |
-| 👶 **Stewie Griffin** | Bebé genio de vocabulario rebuscado y planes de dominación mundial siempre absurdos e inofensivos, arrogante pero cariñoso en el fondo.     |
-| 🐶 **Brian Griffin**  | El perro intelectual de la familia, aspirante a escritor, cínico pero de buen corazón, con tono irónico y referencias culturales.           |
-| 👩 **Lois Griffin**   | La madre paciente y sensata de la familia, cálida, directa, con humor seco frente al caos del resto.                                        |
+| Character             | Description                                                                                                                             |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| 🍺 **Peter Griffin**  | Impulsive and distracted family man, lover of Pawtucket beer and TV, loyal to his family and friends, with absurd and tangential humor. |
+| 👶 **Stewie Griffin** | Genius baby with sophisticated vocabulary and always-absurd, harmless world-domination plans; arrogant but affectionate underneath.     |
+| 🐶 **Brian Griffin**  | The family's intellectual dog, aspiring writer, cynical but kind-hearted, with an ironic tone and cultural references.                  |
+| 👩 **Lois Griffin**   | The family's patient and sensible mother, warm and direct, with dry humor in response to the chaos around her.                          |
 
-Esta es una versión **adaptada y segura** de los personajes: mantiene el humor característico de cada uno, pero sin el contenido ofensivo o de mal gusto que sí puede tener el show original — una decisión deliberada dado el contexto educativo del proyecto.
+This is an **adapted and safe** version of the characters: it maintains each character's distinctive humor while avoiding the offensive or inappropriate content that may appear in the original show — a deliberate decision given the educational context of the project.
 
-## Capturas de pantalla
+## Screenshots
 
 **Home:**
 
-![Vista principal en desktop](capturas%20de%20pantalla%20M3/principal-pc.png)
+![Desktop main view](capturas%20de%20pantalla%20M3/principal-pc.png)
 
 **Chat (desktop):**
 
-![Chat en desktop - vista 1](capturas%20de%20pantalla%20M3/chat-pc-1.png)
+![Desktop chat - view 1](capturas%20de%20pantalla%20M3/chat-pc-1.png)
 
-![Chat en desktop - vista 2](capturas%20de%20pantalla%20M3/chat-pc-2.png)
+![Desktop chat - view 2](capturas%20de%20pantalla%20M3/chat-pc-2.png)
 
 **About:**
 
-![Vista About](capturas%20de%20pantalla%20M3/about.png)
+![About view](capturas%20de%20pantalla%20M3/about.png)
 
 **Mobile:**
 
-![Vista en teléfono](capturas%20de%20pantalla%20M3/telefono.png)
+![Mobile view](capturas%20de%20pantalla%20M3/telefono.png)
